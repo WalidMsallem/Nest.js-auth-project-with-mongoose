@@ -18,8 +18,12 @@ export class TasksService {
     return await createdTask.save();
   }
 
+  async getAllTasks( ): Promise<Tasks[]> {
+         
+         return await this.tasksModel.find()
+  }
 
-  async getTasks(
+  async getTasksByUser(
     filterDto : GetTasksFilterDto,
     user
     ): Promise<Tasks[]> {
@@ -27,15 +31,19 @@ export class TasksService {
          return await this.tasksModel.find({userId : user._id})
   }
 
+  async getTaskByTitle (title : string): Model<Tasks>{
+       return await this.tasksModel.findOne({title})
+ }
+   
   async getTaskById(
     id : string
     ): Promise<Tasks> {
-        console.log(id, 'id')
-const found = await this.tasksModel.findOne({ _id:  id  })
-if (!found) {
-throw new NotFoundException('task not found');
-}
-return found
+        
+        const found = await this.tasksModel.findOne({ _id:  id  })
+        if (!found) {
+        throw new NotFoundException('task not found');
+        }
+        return found
 }
 
  
