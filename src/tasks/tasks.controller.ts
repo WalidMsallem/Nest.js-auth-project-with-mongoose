@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, ParseIntPipe, Param, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, ParseIntPipe, Param, Req, ValidationPipe } from '@nestjs/common';
  
   import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task-dto';
@@ -6,6 +6,7 @@ import { Tasks } from './tasks.interface';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
  import { AuthGuard } from '@nestjs/passport';
 import {GetUser} from '../users/get-user-decorator'
+
 @Controller('tasks')
 @UseGuards(AuthGuard())
 export class TasksController  {
@@ -15,7 +16,7 @@ export class TasksController  {
     }
 
     @Post() 
-    async create(@Body() createTaskDto: CreateTaskDto, @GetUser() user  ) {
+    async create(@Body(ValidationPipe) createTaskDto: CreateTaskDto, @GetUser() user  ) {
         return await this.tasksService.create(createTaskDto ,user);
     }
 

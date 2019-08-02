@@ -4,9 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 import { TaskSchema } from './tasks.schema';
 import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
-// import { UsersController } from './users.controller';
-// import { UsersService } from './users.service';
-// import { UserSchema } from './user.schema';
+ 
 
 @Module({
   imports: [
