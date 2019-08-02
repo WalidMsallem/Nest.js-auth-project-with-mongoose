@@ -4,5 +4,5 @@ import { User } from './user.interface';
 
 
 export const GetUser = createParamDecorator((data, req): Model<User>  => {
-    return req.user
+    return req.user;
 })

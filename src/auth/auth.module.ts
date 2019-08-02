@@ -12,10 +12,10 @@ import { PassportModule } from '@nestjs/passport';
     JwtModule.register({
       secretOrPrivateKey: 'thisismykickasssecretthatiwilltotallychangelater',
        signOptions: {
-        expiresIn: 3600
+        expiresIn: 3600,
       }
     }),
-    UsersModule
+    UsersModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy]
