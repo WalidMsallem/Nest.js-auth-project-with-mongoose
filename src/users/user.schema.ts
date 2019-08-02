@@ -4,14 +4,30 @@ import * as bcrypt from 'bcrypt';
 export const UserSchema = new mongoose.Schema({
     email: {
         type: String,
-     //   unique: true,
-        required: true
+        unique: true,
+        required: true,
     },
     password: {
         type: String,
-        required: true
-    }
-   
+        required: true,
+    },
+    password2: {
+        type: String,
+    },
+    confirmToken: {
+        type: String,
+    },
+    confirmTokenExpiration: {
+        type: String,
+    },
+    isActive: {
+        type: Boolean,
+        default: false,
+    },
+    date: {
+        type: String,
+        default: Date.now,
+    },
 });
 
 // NOTE: Arrow functions are not used here as we do not want to use lexical scope for 'this'
