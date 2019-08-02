@@ -15,7 +15,6 @@ export class UsersService {
   async create(createUserDto: CreateUserDto, req, res) {
 
     crypto.randomBytes(32, (err, buffer) => {
-      // const errors = {};
       
       if (err) {
         console.log(err);
@@ -86,7 +85,7 @@ export class UsersService {
   }
 
   async findOneByEmail(email): Model<User> {
- const user = await this.userModel.findOne({email});
+  const user = await this.userModel.findOne({email});
     return  user
   }
 }

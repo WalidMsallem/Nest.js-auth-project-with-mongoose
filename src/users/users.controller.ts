@@ -35,5 +35,4 @@ export class UsersController {
             message: 'You did it!'
         }
     }
-
 }
