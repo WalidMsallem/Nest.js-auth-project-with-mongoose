@@ -11,7 +11,11 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    password2: {
+    pass: {
+        type: String,
+        required: true,
+    },
+    salt: {
         type: String,
     },
     confirmToken: {
@@ -55,13 +59,26 @@ UserSchema.pre('save', function(next){
 
 }); 
 
-UserSchema.methods.checkPassword = function(attempt, callback){
+UserSchema.methods.checkPassword =  async function(attempt, callback){
 
     let user = this;
 
-    bcrypt.compare(attempt, user.password, (err, isMatch) => {
-        if(err) return callback(err);
-        callback(null, isMatch);
-    });
+ 
+const result =  await  bcrypt.compareSync(  attempt ,  user.pass);
+  
+if( result ) {
+ 
 
-};
+  // return  callback(null, true);
+  return {isMatch : true , err : null}
+}else {
+ 
+   const err = {err : 'error code U.S.ts'}
+  //  return callback(err);
+  return {isMatch : false , err : 'error code U.S.ts'}
+
+}
+   
+ 
+
+}

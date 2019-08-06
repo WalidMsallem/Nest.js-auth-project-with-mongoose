@@ -5,7 +5,7 @@ export class MailService {
 
     async sendVerifyEMail(token , httpMethodes, emailDetails) {
         const {req , res } = httpMethodes
-        console.log(emailDetails,"emailDetails")
+     
         
         const   sendEmail = await  nodeMailer.sendMail({
           to: emailDetails.to ,

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { User } from "../user.interface";
 import { Model } from 'mongoose';
-import { nodeMailer } from '../../config/nodemailer.config';
+ 
 import { CreateUserDto } from '../dto/create-user.dto';
 import * as crypto from 'crypto';
 import * as bcrypt from 'bcrypt';
@@ -34,25 +34,29 @@ export class UserMethodes   {
         }
       
         const newUser = {
-            name: req.body.name,
-            lastname: req.body.lastname,
+     
             email: req.body.email,
             password: req.body.password,
-            organization: req.body.organization,
+            pass : ' ',
+            salt :'',
             confirmToken: token,
             confirmTokenExpiration: Date.now() + 3600000,
         };
       
        
       
-        const salt = await  bcrypt.genSalt(10)
-        const hash =  await bcrypt.hash(newUser.password, salt)
-        if (!hash) {
-          throw new NotFoundException('cannot send email code h');     
-        }
-        newUser.password = hash;
+        const salt = await  bcrypt.genSaltSync(10)
+
+       
+        newUser.salt = salt;
+      
         let createdUser = new this.userModel(newUser);
+        createdUser.password =  await bcrypt.hashSync( req.body.password ,salt);
+        const hash = await bcrypt.hashSync( req.body.password ,salt)
+        createdUser.pass =  hash
         createdUser.save()
+
+
          
       
       }

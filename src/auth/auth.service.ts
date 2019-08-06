@@ -16,24 +16,20 @@ export class AuthService {
         // This will be used for the initial login
         let userToAttempt = await this.usersService.findOneByEmail(loginAttempt.email);
         
+        const result =  await  userToAttempt.checkPassword(loginAttempt.password)
+       
         return new Promise((resolve) => {
+        if(result.err) throw new UnauthorizedException();
+                    if(result.isMatch){
+                        // If there is a successful match, generate a JWT for the user
+                        resolve(this.createJwtPayload(userToAttempt));
 
-            // Check the supplied password against the hash stored for this email address
-            userToAttempt.checkPassword(loginAttempt.password, (err, isMatch) => {
-    
-                if(err) throw new UnauthorizedException();
-    
-                if(isMatch){
-                    // If there is a successful match, generate a JWT for the user
-                    resolve(this.createJwtPayload(userToAttempt));
-    
-                } else {
+                    } else {
                     throw new UnauthorizedException();
-                }
-    
-            });
+                
+                    }
 
-        });
+                });
 
     }
 
