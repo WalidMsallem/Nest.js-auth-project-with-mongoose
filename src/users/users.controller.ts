@@ -23,8 +23,7 @@ export class UsersController {
 
     @Patch('/:confirmToken')
     async confirmEmail(@Req() req, @Res() res ) {
-        return await this.usersService.confirmEmail(req, res);
-        
+        return await this.usersService.confirmEmail(req, res);      
     }
    
     // This route will require successfully passing our default auth strategy (JWT) in order
