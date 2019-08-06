@@ -39,7 +39,7 @@ export class TasksService {
     id : string
     ): Promise<Tasks> {
          
-        const found = await this.tasksModel.findOne({ _id:  id  }).populate( { path: 'userId', select: 'email pass salt'}) 
+        const found = await this.tasksModel.findOne({ _id:  id  }).populate( { path: 'userId', select: 'email isActive'}) 
         if (!found) {
         throw new NotFoundException('task not found');
         }
