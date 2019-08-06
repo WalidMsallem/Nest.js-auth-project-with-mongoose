@@ -20,7 +20,7 @@ export class TasksService {
 
   async getAllTasks( ): Promise<Tasks[]> {
          
-         return await this.tasksModel.find()
+         return await this.tasksModel.find().populate('User') 
   }
 
   async getTasksByUser(
@@ -38,8 +38,8 @@ export class TasksService {
   async getTaskById(
     id : string
     ): Promise<Tasks> {
-        
-        const found = await this.tasksModel.findOne({ _id:  id  })
+         
+        const found = await this.tasksModel.findOne({ _id:  id  }).populate( { path: 'userId', select: 'email pass salt'}) 
         if (!found) {
         throw new NotFoundException('task not found');
         }
